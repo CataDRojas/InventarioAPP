@@ -1,14 +1,17 @@
 package com.caty.inventario_app.controller;
 
+import com.caty.inventario_app.dto.CrearProductoDTO;
+import com.caty.inventario_app.dto.ProductoDTO;
+import com.caty.inventario_app.dto.DetalleInventarioDTO;
+import com.caty.inventario_app.entity.DetalleInventario;
 import com.caty.inventario_app.entity.Inventario;
 import com.caty.inventario_app.entity.Producto;
+import com.caty.inventario_app.exception.ResourceNotFoundException;
 import com.caty.inventario_app.service.DetalleInventarioService;
 import com.caty.inventario_app.service.InventarioService;
 import com.caty.inventario_app.service.ProductoService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/productos")
@@ -29,20 +32,29 @@ public class ProductoController {
     }
 
     @PostMapping("/scan")
-    public String escanearProducto(
+    public ResponseEntity<DetalleInventarioDTO> escanearProducto(
             @RequestParam String codigoBarra,
             @RequestParam Integer cantidad
     ) {
         Inventario inventario = inventarioService
                 .obtenerInventarioEnProgreso()
-                .orElseThrow(() -> new RuntimeException("No hay inventario activo"));
+                .orElseThrow(() -> new ResourceNotFoundException("No hay inventario activo."));
 
         Producto producto = productoService
                 .buscarPorCodigoBarra(codigoBarra)
-                .orElseThrow(()-> new RuntimeException("Producto no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("No se encontró el producto con código: " + codigoBarra));
 
-        detalleInventarioService.agregarOActualizar(inventario, producto, cantidad);
+        DetalleInventario detalleActualizado = detalleInventarioService
+                .agregarOActualizar(inventario, producto, cantidad);
 
-        return "Producto agregado al inventario";
+        DetalleInventarioDTO respuesta = DetalleInventarioDTO.fromEntity(detalleActualizado);
+
+        return ResponseEntity.ok(respuesta);
+    }
+
+    @PostMapping
+    public ResponseEntity<ProductoDTO> crear(@RequestBody CrearProductoDTO datos) {
+        Producto productoGuardado = productoService.crearProducto(datos);
+        return ResponseEntity.ok(ProductoDTO.fromEntity(productoGuardado));
     }
 }
