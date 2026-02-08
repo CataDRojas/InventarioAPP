@@ -13,6 +13,10 @@ import com.caty.inventario_app.service.ProductoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping("/api/productos")
 public class ProductoController {
@@ -56,5 +60,13 @@ public class ProductoController {
     public ResponseEntity<ProductoDTO> crear(@RequestBody CrearProductoDTO datos) {
         Producto productoGuardado = productoService.crearProducto(datos);
         return ResponseEntity.ok(ProductoDTO.fromEntity(productoGuardado));
+    }
+
+    @GetMapping
+    public List<ProductoDTO> listarTodos() {
+        return productoService.listarTodos()
+                .stream()
+                .map(ProductoDTO::fromEntity)
+                .collect(Collectors.toList());
     }
 }
