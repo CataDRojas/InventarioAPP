@@ -1,14 +1,20 @@
 <!doctype html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Agregar productos</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
-  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
-  <style>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://unpkg.com/html5-qrcode"
+      type="text/javascript"
+    ></script>
+    <style>
     header {
       background-color: #f4b73f;
     }
@@ -35,9 +41,8 @@
       padding-top: env(safe-area-inset-top);
     }
   </style>
-</head>
-
-<body class="min-vh-100 d-flex flex-column">
+  </head>
+  <body class="min-vh-100 d-flex flex-column">
   <header>
     <header class="">
       <nav class="navbar">
@@ -65,9 +70,9 @@
     </header>
   </header>
   <main class="flex-fill d-flex flex-column">
-
-    <!-- FILA 1: botón -->
-    <div class="p-3 d-grid mx-auto">
+    <div id="seccion-iniciar"></div>
+    <div id="seccion-activo" class="d-none">
+        <div class="p-3 d-grid mx-auto">
       <!-- Button trigger modal -->
       <button type="button" class="btn btn-lg btn-red" data-bs-toggle="modal" data-bs-target="#modalCrearProducto">
         Agregar Producto
@@ -128,35 +133,10 @@
       </div>
 
     </div>
-
-    <!-- FILA 2: lista de productos -->
-    <div class="flex-fill overflow-auto px-3 pb-3">
-      <div id="contenedorProductos" class="row g-3">
-
-        <!-- CARD PRODUCTO -->
-        <div class="flex-fill overflow-auto px-3 pb-3">
-
-          <div id="contenedorProductos" class="row g-3">
-
-            <div class="col-12 text-center text-muted mt-5">
-              <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">Cargando...</span>
-              </div>
-              <p class="mt-2">Cargando productos...</p>
-            </div>
-
-          </div>
-
-        </div>
-      </div>
     </div>
 
   </main>
 
 
 </body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-  integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-<script src="/js/productos.js"></script>
-
 </html>
